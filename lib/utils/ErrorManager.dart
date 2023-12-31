@@ -50,7 +50,7 @@ abstract class ErrorManager {
                 ],
               ),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text("Accept"),
                   onPressed: () {
                     Navigator.of(cntxt, rootNavigator: true).pop();

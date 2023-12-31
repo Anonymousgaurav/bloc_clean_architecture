@@ -11,7 +11,7 @@ abstract class BaseWidget extends StatelessWidget {
   Widget emptyWithRetry(BuildContext cntxt, String msg) => Center(
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
         Text(msg),
-        FlatButton(
+        TextButton(
             onPressed: () {
               onRetry(cntxt);
             },

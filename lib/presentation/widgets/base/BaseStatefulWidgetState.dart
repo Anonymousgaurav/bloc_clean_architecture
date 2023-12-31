@@ -13,7 +13,7 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
   Widget emptyWithRetry(BuildContext cntxt, String msg) => Center(
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
         Text(msg),
-        FlatButton(
+        TextButton(
             onPressed: () {
               onRetry();
             },
