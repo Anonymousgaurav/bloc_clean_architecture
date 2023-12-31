@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'GetContainerDataModelResponse.g.dart';
 
-@JsonSerializable(explicitToJson: true)
+@JsonSerializable()
 class GetContainerDataModelResponse extends BaseResponse {
   @JsonKey(name: "reusables")
   final List<ReusableContainerModel> reusables;

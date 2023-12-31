@@ -36,11 +36,17 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.3
   # Json
-  json_annotation: ^4.1.0
   basic_utils: ^3.6.0
+  date_format:
+  json_annotation: ^4.8.1
+  sqflite: ^2.3.0
+  path_provider: ^2.1.1
+
 
 
 dev_dependencies:
+  build_runner: ^2.4.7
+  json_serializable: ^6.7.1
   flutter_test:
     sdk: flutter
 
