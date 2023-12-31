@@ -18,5 +18,5 @@ GetContainerDataModelResponse _$GetContainerDataModelResponseFromJson(
 Map<String, dynamic> _$GetContainerDataModelResponseToJson(
         GetContainerDataModelResponse instance) =>
     <String, dynamic>{
-      'reusables': instance.reusables.map((e) => e.toJson()).toList(),
+      'reusables': instance.reusables,
     };
