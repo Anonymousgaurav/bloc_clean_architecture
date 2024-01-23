@@ -11,13 +11,12 @@ abstract class BaseStatefulWidgetState4BLoC<S extends StatefulWidget,
   @override
   void initState() {
     this.initBloc(context);
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<T>(
+    return BlocProvider(
       bloc: this.bloc!,
       child: this._buildStreamForWidget(bloc!),
     );
@@ -25,9 +24,9 @@ abstract class BaseStatefulWidgetState4BLoC<S extends StatefulWidget,
 
   /// Open stream builder for communication between widget and BLoC.
   Widget _buildStreamForWidget(T bloc) => StreamBuilder<ResourceResult<R>>(
-      stream: this.bloc!.dataStream as Stream<ResourceResult<R>>?,
+      stream: this.bloc?.dataStream as Stream<ResourceResult<R>>?,
       builder: (context, snapshot) =>
-          this.displayResult(context, snapshot.data));
+          displayResult(context, snapshot.data));
 
   /**
    * BLoC initialization.
