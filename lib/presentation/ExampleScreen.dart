@@ -8,38 +8,33 @@ import 'package:custom_bloc_state_management/network/api/impl/reusables/Containe
 import 'package:custom_bloc_state_management/presentation/widgets/base/BaseStatefulWidgetState4Bloc.dart';
 import 'package:flutter/material.dart';
 
-const String TAG = "ReserveScreen";
+const String TAG = "ExampleScreen";
 
-class ReserveScreen extends StatefulWidget {
-  ReserveScreen({
-    required this.storeID,
-  });
+class ExampleScreen extends StatefulWidget {
+  const ExampleScreen({Key? key}) : super(key: key);
 
-  final int storeID;
-
-  static const PAGE_NUMBER = 3;
 
   @override
-  _ReserveScreenState createState() => _ReserveScreenState();
+  _ExampleScreenState createState() => _ExampleScreenState();
 }
 
-class _ReserveScreenState extends BaseStatefulWidgetState4BLoC<ReserveScreen,
+class _ExampleScreenState extends BaseStatefulWidgetState4BLoC<ExampleScreen,
     ContainerPointBloc, List<ReusableContainerModel>> {
   @override
   void initState() {
     super.initState();
-    this.initBloc(this.context);
+    initBloc(context);
   }
 
   @override
   void initBloc(BuildContext context) {
-    this.bloc = ContainerPointBloc(
+    bloc = ContainerPointBloc(
         const ContainerPointRepoImpl(ContainerPointApiImpl()));
   }
 
   @override
   void didChangeDependencies() {
-    this._call(this.context);
+    _call(context);
     super.didChangeDependencies();
   }
 
@@ -48,47 +43,46 @@ class _ReserveScreenState extends BaseStatefulWidgetState4BLoC<ReserveScreen,
       id: 1,
       token: "",
     );
-    this
-        .bloc!
+    bloc!
         .processData(ResourceResult(data: null, state: ResourceState.LOADING));
-    this.bloc!.performOperation(containerPointDTO);
+    bloc!.performOperation(containerPointDTO);
   }
 
   @override
-  void didUpdateWidget(covariant ReserveScreen oldWidget) {
+  void didUpdateWidget(covariant ExampleScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
   }
 
   Widget _innerBuild(BuildContext context, List<ReusableContainerModel>? data) {
     print("Success Builddd");
-    return this._buildContent(data);
+    return _buildContent(data);
   }
 
   Widget _buildContent(List<ReusableContainerModel>? data) {
-    return SizedBox();
+    return const SizedBox();
   }
 
   Widget buildLoadingState(BuildContext context) {
     return Center(
         child: Stack(
       children: <Widget>[
-        this._innerBuild(context, List.empty(growable: true)),
-        CircularProgressIndicator()
+        _innerBuild(context, List.empty(growable: true)),
+        const CircularProgressIndicator()
       ],
     ));
   }
 
   Widget buildInitialState(BuildContext context) {
-    return this._innerBuild(context, List.empty(growable: true));
+    return _innerBuild(context, List.empty(growable: true));
   }
 
   Widget buildSuccessState(
       BuildContext context, List<ReusableContainerModel>? data) {
-    return this._innerBuild(context, data);
+    return _innerBuild(context, data);
   }
 
   Widget buildErrorState(BuildContext context, ErrorModel error) {
-    return this._innerBuild(context, List.empty(growable: true));
+    return _innerBuild(context, List.empty(growable: true));
   }
 
   @override
@@ -96,13 +90,13 @@ class _ReserveScreenState extends BaseStatefulWidgetState4BLoC<ReserveScreen,
       BuildContext cntxt, ResourceResult<List<ReusableContainerModel>>? data) {
     switch (data?.state) {
       case ResourceState.SUCCESS:
-        return this.buildSuccessState(cntxt, data!.data);
+        return buildSuccessState(cntxt, data!.data);
       case ResourceState.LOADING:
-        return this.buildLoadingState(cntxt);
+        return buildLoadingState(cntxt);
       case ResourceState.ERROR:
-        return this.buildErrorState(cntxt, data!.error!);
+        return buildErrorState(cntxt, data!.error!);
       default:
-        return this.buildInitialState(cntxt);
+        return buildInitialState(cntxt);
     }
   }
 }
