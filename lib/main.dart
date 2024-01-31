@@ -1,4 +1,4 @@
-import 'package:custom_bloc_state_management/presentation/ExampleScreen.dart';
+import 'package:custom_bloc_state_management/presentation/screens/ExampleScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
