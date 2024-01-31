@@ -4,6 +4,8 @@ import 'package:custom_bloc_state_management/models/dto/ResourceResult.dart';
 import 'package:custom_bloc_state_management/presentation/widgets/base/BaseStatefulWidgetState.dart';
 import 'package:flutter/material.dart';
 
+import 'BaseBlocProvider.dart';
+
 abstract class BaseStatefulWidgetState4BLoC<S extends StatefulWidget,
     T extends Bloc, R> extends BaseStatefulWidgetState<S> {
   T? bloc;
@@ -16,7 +18,12 @@ abstract class BaseStatefulWidgetState4BLoC<S extends StatefulWidget,
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    // return BlocProvider(
+    //   bloc: this.bloc!,
+    //   child: this._buildStreamForWidget(bloc!),
+    // );
+
+    return BaseBlocProvider<T>(
       bloc: this.bloc!,
       child: this._buildStreamForWidget(bloc!),
     );
@@ -26,7 +33,7 @@ abstract class BaseStatefulWidgetState4BLoC<S extends StatefulWidget,
   Widget _buildStreamForWidget(T bloc) => StreamBuilder<ResourceResult<R>>(
       stream: this.bloc?.dataStream as Stream<ResourceResult<R>>?,
       builder: (context, snapshot) =>
-          displayResult(context, snapshot.data));
+          this.displayResult(context, snapshot.data));
 
   /**
    * BLoC initialization.
@@ -44,4 +51,7 @@ abstract class BaseStatefulWidgetState4BLoC<S extends StatefulWidget,
    * Must be overriden by subclasses to paint UI.
    */
   Widget displayResult(BuildContext cntxt, ResourceResult<R>? data);
+
+  @override
+  String getScreenName() => this.runtimeType.toString();
 }
