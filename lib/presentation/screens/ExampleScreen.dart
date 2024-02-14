@@ -1,9 +1,14 @@
 import 'package:custom_bloc_state_management/business/bloc/ContainerPointBloc.dart';
+import 'package:custom_bloc_state_management/business/bloc/ProductBloc.dart';
+import 'package:custom_bloc_state_management/data/repos/ProductsRepoImpl.dart';
 import 'package:custom_bloc_state_management/data/repos/reusables/ContainerPointRepoImpl.dart';
 import 'package:custom_bloc_state_management/models/ErrorModel.dart';
+import 'package:custom_bloc_state_management/models/dto/ProductDTO.dart';
 import 'package:custom_bloc_state_management/models/dto/ResourceResult.dart';
 import 'package:custom_bloc_state_management/models/dto/reusables/ContainerPointDTO.dart';
+import 'package:custom_bloc_state_management/models/products/ProductsModel.dart';
 import 'package:custom_bloc_state_management/models/resuables/ReusableContainerModel.dart';
+import 'package:custom_bloc_state_management/network/api/impl/products/ProductsApiImpl.dart';
 import 'package:custom_bloc_state_management/network/api/impl/reusables/ContainerPointApiImpl.dart';
 import 'package:custom_bloc_state_management/presentation/widgets/base/BaseStatefulWidgetState4Bloc.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +24,7 @@ class ExampleScreen extends StatefulWidget {
 }
 
 class _ExampleScreenState extends BaseStatefulWidgetState4BLoC<ExampleScreen,
-    ContainerPointBloc, List<ReusableContainerModel>> {
+    ProductBloc, List<ProductsModel>> {
   @override
   void initState() {
     super.initState();
@@ -28,24 +33,23 @@ class _ExampleScreenState extends BaseStatefulWidgetState4BLoC<ExampleScreen,
 
   @override
   void initBloc(BuildContext context) {
-    bloc = ContainerPointBloc(
-        const ContainerPointRepoImpl(ContainerPointApiImpl()));
+    bloc = ProductBloc(
+        const ProductsRepoImpl(ProductsApiImpl()));
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      this._call();
+    });
   }
 
   @override
   void didChangeDependencies() {
-    _call(context);
     super.didChangeDependencies();
   }
 
-  void _call(BuildContext context) {
-    ContainerPointDTO containerPointDTO = ContainerPointDTO(
-      id: 1,
-      token: "",
-    );
+  void _call() {
+    ProductDTO productDTO = ProductDTO();
     bloc!
         .processData(ResourceResult(data: null, state: ResourceState.LOADING));
-    bloc!.performOperation(containerPointDTO);
+    bloc!.performOperation(productDTO);
   }
 
   @override
@@ -53,50 +57,39 @@ class _ExampleScreenState extends BaseStatefulWidgetState4BLoC<ExampleScreen,
     super.didUpdateWidget(oldWidget);
   }
 
-  Widget _innerBuild(BuildContext context, List<ReusableContainerModel>? data) {
-    print("Success Builddd");
-    return _buildContent(data);
+
+  Widget _buildSuccess(
+      BuildContext context, List<ProductsModel>? data) {
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          child: Text(data?[0].productTitle ?? "Product Not available"),
+        ),
+      ),
+    );
   }
 
-  Widget _buildContent(List<ReusableContainerModel>? data) {
-    return const SizedBox();
-  }
+  Widget buildLoadingIndicator() => Center(child: CircularProgressIndicator());
 
-  Widget buildLoadingState(BuildContext context) {
-    return Center(
-        child: Stack(
-      children: <Widget>[
-        _innerBuild(context, List.empty(growable: true)),
-        const CircularProgressIndicator()
-      ],
-    ));
-  }
-
-  Widget buildInitialState(BuildContext context) {
-    return _innerBuild(context, List.empty(growable: true));
-  }
-
-  Widget buildSuccessState(
-      BuildContext context, List<ReusableContainerModel>? data) {
-    return _innerBuild(context, data);
-  }
-
-  Widget buildErrorState(BuildContext context, ErrorModel error) {
-    return _innerBuild(context, List.empty(growable: true));
-  }
 
   @override
   Widget displayResult(
-      BuildContext cntxt, ResourceResult<List<ReusableContainerModel>>? data) {
-    switch (data?.state) {
-      case ResourceState.SUCCESS:
-        return buildSuccessState(cntxt, data!.data);
-      case ResourceState.LOADING:
-        return buildLoadingState(cntxt);
-      case ResourceState.ERROR:
-        return buildErrorState(cntxt, data!.error!);
-      default:
-        return buildInitialState(cntxt);
+      BuildContext context,
+      ResourceResult<List<ProductsModel>>? result,
+      ) {
+    if (result != null) {
+      switch (result.state!) {
+        case ResourceState.LOADING:
+          return buildLoadingIndicator();
+        case ResourceState.SUCCESS:
+          return this._buildSuccess(context, result.data);
+        case ResourceState.ERROR:
+          return this
+              .empty("Error");
+        case ResourceState.INITIAL:
+          return buildLoadingIndicator();
+      }
     }
+    return buildLoadingIndicator();
   }
 }

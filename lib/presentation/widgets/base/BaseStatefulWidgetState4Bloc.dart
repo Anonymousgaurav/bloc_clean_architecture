@@ -1,13 +1,12 @@
 import 'package:custom_bloc_state_management/business/BlocProvider.dart';
 import 'package:custom_bloc_state_management/business/bloc/Bloc.dart';
 import 'package:custom_bloc_state_management/models/dto/ResourceResult.dart';
-import 'package:custom_bloc_state_management/presentation/widgets/base/BaseStatefulWidgetState.dart';
 import 'package:flutter/material.dart';
 
-import 'BaseBlocProvider.dart';
+import 'BaseStatefulWidgetState.dart';
 
 abstract class BaseStatefulWidgetState4BLoC<S extends StatefulWidget,
-    T extends Bloc, R> extends BaseStatefulWidgetState<S> {
+T extends Bloc, R> extends BaseStatefulWidgetState<S> {
   T? bloc;
 
   @override
@@ -18,12 +17,7 @@ abstract class BaseStatefulWidgetState4BLoC<S extends StatefulWidget,
 
   @override
   Widget build(BuildContext context) {
-    // return BlocProvider(
-    //   bloc: this.bloc!,
-    //   child: this._buildStreamForWidget(bloc!),
-    // );
-
-    return BaseBlocProvider<T>(
+    return BlocProvider<T>(
       bloc: this.bloc!,
       child: this._buildStreamForWidget(bloc!),
     );
