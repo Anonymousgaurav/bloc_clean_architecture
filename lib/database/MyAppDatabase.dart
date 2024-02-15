@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:custom_bloc_state_management/database/table/CartTable.dart';
 import 'package:custom_bloc_state_management/database/table/SessionsTable.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -21,7 +22,6 @@ class MyAppDatabase {
 
   Future<Database> createDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    //"ReactiveTodo.db is our database instance name
     String path = join(documentsDirectory.path, DATABASE_NAME);
 
     var database = await openDatabase(path,
@@ -35,6 +35,6 @@ class MyAppDatabase {
   }
 
   void initDB(Database database, int version) async {
-    SessionsTable.createTable(database, version);
+    CartTable.createTable(database, version);
   }
 }

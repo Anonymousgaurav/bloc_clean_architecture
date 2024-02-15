@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:custom_bloc_state_management/network/NetConfig.dart';
 import 'package:custom_bloc_state_management/network/NetResponses.dart';
 import 'package:custom_bloc_state_management/network/exception/TokenException.dart';
 import 'package:http/http.dart';
@@ -10,16 +8,6 @@ import 'package:http/http.dart';
  */
 class BaseApi {
   const BaseApi();
-
-  /**
-   * Security Basic Authorization
-   */
-  Map<String, String> get headers {
-    return {
-      "Accept": "application/json",
-      HttpHeaders.authorizationHeader: "Basic ${Credentials.BAH_PASS}"
-    };
-  }
 
   Map<String, String> getSecureHeaders(String token) => {
         "Accept": "application/json",
