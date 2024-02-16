@@ -57,7 +57,9 @@ class _ExampleScreenState extends BaseStatefulWidgetState4BLoC<ExampleScreen,
     return SafeArea(
       child: Scaffold(
         body: Container(
-          child: Text(data?[0].productTitle ?? "Product Not available"),
+          child: ListView.builder(itemBuilder: (context,index){
+            return Text("${data?[index].productTitle}");
+          },itemCount: data?.length,),
         ),
       ),
     );
