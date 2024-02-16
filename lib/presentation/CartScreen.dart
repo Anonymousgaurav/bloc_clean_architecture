@@ -1,5 +1,7 @@
 import 'package:custom_bloc_state_management/models/products/CartModel.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+
 
 class CartScreen extends StatefulWidget {
   final List<CartModel> data;
@@ -43,6 +45,7 @@ class _CartScreenState extends State<CartScreen> {
                     Text("${widget.data[index].totalProducts}"),
                   ],
                 ),
+               Image.memory(base64.decode(widget.data[index].productModel[index].localThumbnail ?? ""))
               ],
             ),
           );

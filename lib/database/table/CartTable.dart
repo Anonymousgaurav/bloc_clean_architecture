@@ -26,6 +26,7 @@ class CartTable {
             discountedPrice REAL,
             thumbnail TEXT,
             cartId INTEGER,
+            localThumbnail TEXT,
             FOREIGN KEY (cartId) REFERENCES carts (id) ON DELETE CASCADE
           )
         ''');  }

@@ -1,6 +1,7 @@
 import 'package:custom_bloc_state_management/models/BaseModel.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+
 part 'ProductsModel.g.dart';
 
 @JsonSerializable(explicitToJson: true)
@@ -21,8 +22,9 @@ class ProductsModel extends BaseModel {
   final double discountedPrice;
   @JsonKey(name: "thumbnail")
   final String thumbnailProduct;
+  String? localThumbnail;
 
-  const ProductsModel(
+   ProductsModel(
       this.productID,
       this.productTitle,
       this.productPrice,
@@ -30,7 +32,8 @@ class ProductsModel extends BaseModel {
       this.total,
       this.discountedPercentage,
       this.discountedPrice,
-      this.thumbnailProduct
+      this.thumbnailProduct,
+     this.localThumbnail
       );
 
   factory ProductsModel.fromJson(Map<String, dynamic> json) =>
@@ -46,9 +49,11 @@ class ProductsModel extends BaseModel {
       'total': total,
       'discountPercentage': discountedPercentage,
       'discountedPrice': discountedPrice,
-      'thumbnail': thumbnailProduct,
+      'thumbnail':  thumbnailProduct,
+      'localThumbnail' : localThumbnail
     };
   }
+
   factory ProductsModel.fromMap(Map<String, dynamic> map) {
     return ProductsModel(
        map['id'] ,
@@ -59,6 +64,7 @@ class ProductsModel extends BaseModel {
        map['discountPercentage'],
        map['discountedPrice'],
        map['thumbnail'],
+      map['localThumbnail'], // add this line
     );
   }
 }

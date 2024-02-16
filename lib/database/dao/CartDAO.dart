@@ -1,4 +1,5 @@
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:custom_bloc_state_management/database/MyAppDatabase.dart';
 import 'package:custom_bloc_state_management/database/table/SessionsTable.dart';
 import 'package:custom_bloc_state_management/models/products/CartModel.dart';
@@ -17,11 +18,33 @@ class CartDAO {
     for(final cart in cartList) {
     await db.insert('carts', cart.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
+    print("Sql >>>>>}");
+
     for (var product in cart.productModel) {
+      product.localThumbnail = await imageUrlToBase64(product.thumbnailProduct);
       await db.insert('products', product.toMap());
     }
   }
   }
+  Future<String> imageUrlToBase64(String imageUrl) async {
+    try {
+      final response = await http.get(Uri.parse(imageUrl));
+
+      if (response.statusCode == 200) {
+        final List<int> bytes = response.bodyBytes;
+        return base64Encode(bytes);
+      } else {
+        // Handle error if the image couldn't be fetched
+        print("Error: ${response.statusCode}");
+        return "";
+      }
+    } catch (e) {
+      // Handle other exceptions
+      print("Exception: $e");
+      return "";
+    }
+  }
+
 
 
   Future<List<CartModel>> getAllCarts() async {

@@ -16,6 +16,7 @@ ProductsModel _$ProductsModelFromJson(Map<String, dynamic> json) =>
       (json['discountPercentage'] as num).toDouble(),
       (json['discountedPrice'] as num).toDouble(),
       json['thumbnail'] as String,
+      json['localThumbnail'] as String?,
     );
 
 Map<String, dynamic> _$ProductsModelToJson(ProductsModel instance) =>
@@ -28,4 +29,5 @@ Map<String, dynamic> _$ProductsModelToJson(ProductsModel instance) =>
       'discountPercentage': instance.discountedPercentage,
       'discountedPrice': instance.discountedPrice,
       'thumbnail': instance.thumbnailProduct,
+      'localThumbnail': instance.localThumbnail,
     };
