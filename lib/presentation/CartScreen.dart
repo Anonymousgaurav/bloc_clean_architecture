@@ -12,12 +12,44 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    print("Product length >>${widget.data}");
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          child: Text(widget.data[0].totalProducts.toString()),
-        ),
+        body: ListView.builder(itemBuilder: (context ,index){
+          return Container(
+            margin: EdgeInsets.only(top: 10.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text("${widget.data[index].productModel[index].productTitle}"),
+                    Text(" "),
+                    Text("${widget.data[index].productModel[index].productQuantity}"),
+
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Total Products'),
+                    Text(" "),
+                    Text("${widget.data[index].totalProducts}"),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },itemCount: widget.data.length,)
       ),
-    );  }
+    );
+  }
+
+
 }
