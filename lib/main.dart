@@ -1,4 +1,5 @@
 import 'package:custom_bloc_state_management/presentation/screens/ExampleScreen.dart';
+import 'package:custom_bloc_state_management/presentation/screens/HomePageScreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ExampleScreen(),
+      home:  HomePage(),
     );
   }
 }
